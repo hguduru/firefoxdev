@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- addon_name_marker -->
+    <title>Private Personas Addon Settings</title>
+    <link rel="stylesheet" href="./css/preferences.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./font-awesome-4.0.3/css/font-awesome.min.css" />
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing&key=AIzaSyCaPVdC4S-g0owPJ12GcZzCISxma8lrl2U&sensor=false"></script>
+    <script type="text/javascript" src="./jquery/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="./message_tunnel.js"></script>
+    <script type="text/javascript" src="./event_manager.js"></script>
+    <script type="text/javascript" src="./persona_manager.js"></script>
+    <script type="text/javascript" src="./preferences.js"></script>
+  </head>
+  <body>
+    <div id="confirm-delete"
+         class="hidden popup-dialog popup-dialog-position">
+      <p>
+        Are you sure you want to delete location: <br />
+        <b id="confirm-del-name"></b>
+      </p>
+      <button id="confirm-no">No</button>
+      <button id="confirm-yes">Yes</button>
+    </div>
+
+    <div id="add-location-popup" class="hidden popup-dialog popup-dialog-position">
+      <i class="fa fa-times fa-fw button-like right-side"></i>
+      <p>Click on the map to place the new location...</p>
+    </div>
+
+    <div class="ui-widget" id="preferences-form">
+      <h3 class="text">
+        <!-- addon_name_marker -->
+        Private Persona Addon Settings
+      </h3>
+      <p class="subheading">Global settings</p>
+      <div class="subheading-section">
+        <div class="dialog-section">
+          <label>Version</label>
+          <span class="right-side value-section" id="addon-version">
+          </span>
+        </div>
+        <div class="dialog-section">
+          <label for="default-persona">
+            <!-- addon_name_marker -->
+            Default persona for new tabs
+          </label>
+
+          <span class="right-side value-section">
+            <select id="default-persona-input"
+                    name="default-persona"
+                    class="gen-setting"></select>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup popup-dialog hidden">
+              <!-- addon_name_marker -->
+              This is the persona that is assigned to new tabs by default.
+            </span>
+          </span>
+          <br/>
+        </div>
+        <div class="dialog-section">
+          <label for="ask-persona-input">Never show popup dialog</label>
+          <span class="right-side value-section">
+            <input id="ask-persona-input"
+                   name="ask-for-persona"
+                   class="gen-setting"
+                   type="checkbox"></input>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              Selecting this will cause the popup dialog to never show when you visit a new website.
+            </span>
+          </span>
+        </div>
+        <div class="dialog-section">
+          <label for="default_selected">
+            <!-- addon_name_marker -->
+            Select "Switch persona" by default when the default persona is loaded
+          </label>
+          <span class="right-side value-section">
+            <input id="default_selected"
+                   name="default_selected"
+                   class="gen-setting"
+                   type="checkbox"></input>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              <!-- addon_name_marker -->
+              Selecting this will cause the popup dialog to default to switching to a persona instead of "stay in this persona".
+            </span>
+          </span>
+        </div>
+        <div class="dialog-section">
+          <label for="ask-persona-conflict">Do not show popup dialog on conflict</label>
+          <span class="right-side value-section">
+            <input id="ask-persona-conflict"
+                   class="gen-setting"
+                   type="checkbox"></input>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              <!-- addon_name_marker -->
+              Selecting this will cause the popup dialog to not show when there is are conflicting persona rules.
+            </span>
+          </span>
+        </div>
+        <div class="dialog-section">
+          <label for="use-location-data">Use location</label>
+          <span class="right-side value-section">
+            <input id="use-location-data"
+                   class="gen-setting"
+                   type="checkbox"></input>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              <!-- addon_name_marker -->
+              Selecting this will allow using geolocation data to be used to match persona rules.
+            </span>
+          </span>
+        </div>
+
+        <div id="location-maps"
+             class="dialog-section">
+          <span id="map-load-status" class="hidden">
+            <i class="fa fa-spinner fa-spin"></i>
+            Finding current position...
+          </span>
+          <span id="must-reload" class="hidden">
+            Must reload to apply changes...
+          </span>
+
+          <div id="map-control-container">
+            <div id="named-locations-menu">
+              Your locations:
+              <ul class="two-columns">
+                <li class="loc-item add-loc-parent"><a id="add-location-btn" href="#">Add a new location</a></li>
+              </ul>
+            </div>
+            <span id="classify-location">
+              Current location: <b id="classify-location-name"></b>
+            </span>
+            <!-- <div id="drawing-directions" class="smaller" style="margin-top : 5px;"> -->
+            <!-- </div> -->
+            <div id="map-container">
+            </div>
+          </div>
+
+        </div>
+        <div class="dialog-section"
+             id="save-cancel">
+          <button id="save-prefs"
+                  class="right-side">Apply</button>
+
+          <button id="cancel-prefs"
+                  class="right-side">Undo</button>
+        </div>
+      </div>
+
+      <p class="subheading">
+        <!-- addon_name_marker -->
+        Create or edit persona
+      </p>
+      <div class="subheading-section">
+        <div class="dialog-section">
+          <select id="modify-persona"
+                  name="modify-persona"></select>
+          <button id="modify-persona-btn"
+                  name="modify"
+                  class="right-side">
+            <i class="fa fa-edit"></i>
+            <!-- addon_name_marker -->
+            Edit persona
+          </button>
+        </div>
+        <div class="dialog-section">
+          <label>
+            <!-- addon_name_marker -->
+            Make a new persona
+          </label>
+          <button id="new-persona-btn"
+                  class="right-side">
+            <i class="fa fa-plus"></i>
+            <!-- addon_name_marker -->
+            New persona
+          </button>
+        </div>
+
+        <div class="dialog-section">
+          <label>Group web pages:TODOCHANGE</label>
+          <button id="group-interface-btn" class="right-side">
+            <i class="fa fa-plus"></i>
+          </button>
+
+        </div>
+      </div>
+
+      <p class="subheading">Logging</p>
+      <div class="subheading-section">
+        <div class="dialog-section">
+          <label for="remove_btn">**Send log to the researchers**</label>
+          <span class="right-side value-section">
+            <button id="remove_btn">Open log</button>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              Remove items from the study log so that the researchers will not see it.
+            </span>
+          </span>
+        </div>
+        <div class="dialog-section" id="report-bug-area">
+          <label for="rep-bug">Report bug</label>
+          <span class="right-side value-section">
+            <button id="rep-bug">Report</button>
+            <i class="fa fa-info-circle space-left"></i>
+            <span class="info-popup hidden popup-dialog">
+              Send a message to the developers about a problem with the addon.
+            </span>
+          </span>
+
+          <div class="bug-desc-div hidden">
+            <div id="description-title" class="bug-desc-title space-top-bot">
+              Please enter a description of the bug. Including your email will allow the developers to contact you when the issue is fixed or if more information is required.
+            </div>
+            <div id="submitting-title" class="bug-desc-title space-top-bot hidden">
+              <i class="fa fa-spinner fa-spin space-right"></i>Submitting...
+            </div>
+            <div id="result-title" class="bug-desc-title space-top-bot hidden">
+            </div>
+            <div class="space-top-bot bug-include-config">
+              <label for="include-configuration">Include configuration information</label>
+              <span class="right-side value-section">
+                <input id="include-configuration" class="checkbox" type="checkbox" checked="true"></input>
+                <i class="fa fa-info-circle space-left"></i>
+                <span class="info-popup hidden popup-dialog">
+                  <!-- addon_name_marker -->
+                  Including configuration information will allow the developers to better fix and diagnose the bug. If this option is selected, your browsing history and cookies are <b>never</b> sent; however, the rules and names of the personas that you created will be sent.
+                </span>
+              </span>
+            </div>
+            <textarea id="bug-desc" rows="10" cols="40"></textarea>
+            <pre id="submitted-info" class="hidden"></pre>
+            <div class="bug-submit-div">
+              <button id="bug-submit">Submit</button>
+              <button id="cancel-report-btn">Cancel</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- add some space -->
+      <div style="height : 20px; ">
+      </div>
+    </div>
+  </body>
+</html>

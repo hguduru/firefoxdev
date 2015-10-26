@@ -1,0 +1,27 @@
+Summer 2015 
+
+1. Fix interface bugs.
+    - play with the configuration page, and try to create different
+       personas for browser. 
+    - use the drag and drop interface to place urls into bins of
+       personas 
+    - document any bugs you see
+    - we know that when there are a lot of urls in one persona, the page does not
+       display the urls correctly, fix the bug
+
+2. Upgrade the extension to the current version of FireFox
+
+
+3(a). Improve the notification of uncategorized urls when user navigate
+to those pages.
+3(b). Improve the notification of the persona that the user is
+currently in.
+
+
+
+
+4. In the configuration page, add the functionality of porting users'
+history to personas. This requires some interface design.
+
+5. Port the extension to Chrome
+

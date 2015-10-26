@@ -1,0 +1,218 @@
+#preferences-form {    
+    max-width : 500px;
+    margin-left : auto;
+    margin-right : auto;
+    overflow : visible;
+}
+
+.subheading {
+    margin-top : 30px;
+    margin-bottom : 0px;
+    font-style : italic;
+}
+
+.dialog-section {
+    clear: both;
+    padding: 2px;
+    overflow: visible;
+    margin-bottom : 20px;
+}
+
+.subheading-section {
+    margin-top : 5px;
+    border-top-style : solid;
+    border-top-color : gray;
+    border-top-width : 1px;
+    padding : 10px;
+}
+
+.bug-desc-div {
+    margin-left : 20px;
+    margin-bottom : 10px;
+    padding-top : 10px;
+}
+
+.bug-desc-title {
+    font-size : smaller;
+    width : 314px;
+}
+
+.bug-submit-div {
+    margin-top : 5px;
+}
+
+.bug-success {
+    color : green;
+}
+
+.bug-error {
+    color : red;
+}
+
+html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
+#location-maps { 
+    margin-left : 20px;
+}
+
+#map-container {
+    height : 300px;
+}
+
+#classify-location {
+    margin-bottom : 5px;
+    display : block;
+}
+
+#classify-location-name a {
+    margin-left : 5px;
+    display : inline-block;
+}
+
+#nav-controls {
+    margin-right : 10px;
+    margin-top : 10px;
+    min-width : 100px;
+}
+
+.two-columns {
+    columns : 2;
+    list-style : none;
+    padding-left : 0;
+    margin-left : 20px;
+}
+
+.loc-item {
+    list-style-type : none;
+    margin-top : 2px;
+    text-overflow : ellipsis;
+    word-break : keep-all;
+    white-space : nowrap;
+    overflow : hidden;
+    padding : 3px;
+    min-height : 20px;
+    position : relative;
+    border-top-right-radius : 6px;
+    border-top-left-radius : 6px;
+    border-bottom-right-radius : 6px;
+    border-bottom-left-radius : 6px;
+}
+
+.loc-item-edit {
+    border-bottom-right-radius : 0px !important;
+    border-bottom-left-radius : 0px !important;
+}
+
+.loc-item-edit, .loc-item:hover, .edit-area {
+    background : rgb(222, 222, 222);
+}
+
+.edit-area {
+    border-top-right-radius : 0px;
+    border-top-left-radius : 0px;
+    border-bottom-right-radius : 6px;
+    border-bottom-left-radius :6px;
+}
+
+.editing-input {
+    width : auto;
+}
+
+.edit-area-size {
+    margin : 0px;
+    padding : 5px;
+}
+
+.loc-item a {
+    display : inline-block;
+    cursor : pointer;
+    float : left;
+    height : 20px;
+    margin-top : -10px;
+    position : absolute;
+    top : 55%;
+}
+
+.loc-change-btn {
+    display : none;
+    float : right;
+    height : 20px;
+    margin-top : -10px;
+    position : absolute;
+    top : 55%;
+    right : 5px;
+}
+
+.loc-item-edit .loc-change-btn {
+    display : inline-block !important;
+}
+
+.loc-item:hover .loc-change-btn {
+    display : inline-block !important;
+}
+
+.loc-change-btn i {
+    cursor : pointer;
+    margin-right : 2px;
+}
+
+.inputs-span {
+    width : 40%;
+    display : inline-block;
+    margin : 0px;
+    padding : 0px;
+}
+
+.add-loc-parent {
+    margin-top : 8px !important;
+}
+
+#add-location-btn {
+    cursor : pointer;
+}
+
+#map-load-status {
+    font-size : small;    
+}
+
+.popup-dialog-position {
+    height : auto !important;
+    width : 400px !important;
+    top : 200px !important;
+    position : absolute !important;
+}
+
+#confirm-yes, #confirm-no {
+    margin : 10px;
+    float : right;
+}
+
+#confirm-delete {
+    padding : 10px;
+}
+
+#add-location-popup {
+    padding : 10px;
+}
+
+.fa-times {
+    border-radius : 4px;
+    display : inline-block;
+    font-size : 14px !important;
+    margin : 0px !important;
+    padding : 0px !important;
+}
+
+.fa-times:hover {
+    color : rgb(255, 255, 255);
+    background : rgb(34, 34, 34);
+}
+
+#classify-location a {
+    cursor : pointer;
+}
+
+.dialog-section > label {
+    display : inline-block;
+    max-width : 80%;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head>
+    <title>Persona Config</title>
+    <link rel="stylesheet" href="../css/common.css" type="text/css"/>
+    <link rel="stylesheet" href="./grouping.css" type="text/css" />
+    <link rel="stylesheet" href="../font-awesome-4.0.3/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="../jquery-simplecolorpicker-master/jquery.simplecolorpicker.css" />
+    <script type="text/javascript" src="../jquery/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../jquery-simplecolorpicker-master/jquery.simplecolorpicker.js"></script>
+    <script type="text/javascript" src="../interact.min.js"></script>
+    <script type="text/javascript" src="../event_manager.js"></script>
+    <script type="text/javascript" src="../persona_manager.js"></script>
+    <script type="text/javascript" src="../message_tunnel.js"></script>
+    
+    <script type="text/javascript" src="./host-view.js"></script>
+    <script type="text/javascript" src="./host-model.js"></script>
+    <script type="text/javascript" src="./block-object.js"></script>
+    <script type="text/javascript" src="./block-oracle.js"></script>
+    <script type="text/javascript" src="./new-persona-block.js"></script>
+    <script type="text/javascript" src="./unconfigured-block.js"></script>
+    <script type="text/javascript" src="./trash-block.js"></script>
+    <script type="text/javascript" src="./persona-block.js"></script>
+    <script type="text/javascript" src="./persona-renderer.js"></script>
+    <script type="text/javascript" src="./grouping.js"></script>
+
+  </head>
+  <body>
+    <div class="main-div">
+      <div>
+        <p>
+          <span class="bold">
+            Configure your privacy preferences
+          </span>
+        </p>
+        <p>
+          You can drag websites to different personas to limit
+          tracking. Uncategorized websites should be dragged into
+          personas according to how you prefer to be tracked.
+        </p>
+      </div>
+
+      <div class="persona-area">
+      </div>
+    </div>
+  </body>
+</html>

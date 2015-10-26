@@ -1,0 +1,1 @@
+Changed code in data/grouping-interface/persona-block.js to correct minor spelling errors and clean up the user interface of the info popup available with each item visited, stating the number of times the site was visited.

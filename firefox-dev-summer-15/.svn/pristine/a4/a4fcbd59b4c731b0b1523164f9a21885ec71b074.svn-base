@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+
+    <link rel="stylesheet" href="./font-awesome-4.0.3/css/font-awesome.min.css" />
+    <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+
+
+    <script type="text/javascript" src="./message_tunnel.js"></script>
+    <script type="text/javascript" src="./event_manager.js"></script>
+    <script type="text/javascript" src="./persona_manager.js"></script>
+    <script type="text/javascript" src="./frame_utils.js"></script>
+
+    <script type="text/javascript" src="./navbar_panel.js"></script>
+  </head>
+  <body>
+    <div class="navbar-section">
+      <ul class="navbar-list navbar-selecting" id="persona-items">
+      </ul>
+    </div>
+    <div class="navbar-top-divider navbar-section">
+      <ul class="navbar-list">
+        <li>
+          <!-- addon_name_marker -->
+          <div class="navbar-item" id="new-mode-btn">New persona...</div>
+        </li>
+        <li>
+          <div class="navbar-item" id="assign-btn">Assign this page to...</div>
+        </li>
+        <li>
+          <div class="navbar-item" id="settings-btn">Settings...</div>
+        </li>
+        <li>
+          <div class="navbar-item" id="grouping-page">Assign personas...</div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

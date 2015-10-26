@@ -1,0 +1,19 @@
+#persona-panel {
+    /* opacity : .9; */
+    background: transparent;
+    border: none;
+    -moz-appearance : none !important;
+    /* -moz-transition: opacity .6s ease-in-out; */
+}
+
+/* #persona-panel:hover { */
+/*     opacity : .99; */
+/* } */
+
+#persona-panel > iframe {
+    width : 300px;
+}
+
+.heighttrans {
+    /* transition: height, .5s !important; */
+}

@@ -1,0 +1,782 @@
+function BlockObject(oracle, manager){
+    this.oracle = oracle;
+    this.events = new EventManager();
+
+    this.manager = manager;
+    this.activators = {};
+    this.interactable = null;
+    this.element = null;
+    this.editingTitle =  false;
+    this.editingHost = false;
+    this.oracle.events.on("change", this.onChange.bind(this));
+    this.oracle.events.on("remove", this.remove.bind(this));
+    this.oracle.events.on("styleme", this.styleme.bind(this));
+    this.manager.events.on("refresh", this.refresh.bind(this));
+    this.unshownchildren = 0;
+};
+
+BlockObject.prototype.styleme = function(arg){
+    this.oracle.styleBlock(this.element, arg);
+};
+
+BlockObject.prototype.onChange = function(type){
+    var parelem = this.elem();
+    if(type == "color"){
+        var color_str = this.color();
+        var color_select = this.selectColor();
+        parelem.css("background", color_str);
+        $(parelem).find(".persona-color-picker").simplecolorpicker("selectColor", color_select || "none");
+    }
+    if(type == "name" || type == "allow_tracking"){
+        if(this.editingTitle){
+            this.endEditTitle();
+        }
+        parelem.find(".persona-title-text-node").text(this.title());
+        parelem.find(".persona-tracking-input > input")
+            .attr("checked", this.oracle.hasTracking());
+    }
+    if(type == "hosts"){
+        parelem.children(".persona-host-circle").remove();
+        this.addHosts();
+    }
+};
+
+BlockObject.prototype.color = function(){
+    return this.oracle.color();
+};
+
+BlockObject.prototype.selectColor = function(){
+    return this.oracle.selectColor();
+};
+
+BlockObject.prototype.title = function(){
+    return this.oracle.title();
+};
+
+BlockObject.prototype.elem = function(){
+    return this.element;
+};
+
+BlockObject.prototype.addHosts = function(){
+    var hosts = this.oracle.hosts();
+    for(var i = 0; i < hosts.length; i++){
+        this.addHost(hosts[i]);
+    }
+};
+
+BlockObject.prototype.makeHostDivPartial = function(ahost, idme){
+    var host_text = $("<span>", {
+        "class" : "persona-host-text ellipsis-text",
+        "text" : ahost
+    });
+    if(idme){
+        host_text.attr("data-persona", this.oracle.id())
+            .attr("data-host", ahost);
+    }
+    return host_text;
+};
+
+BlockObject.prototype.makeHostDiv = function(ahost, idme){
+    var toadd = $("<div>", {
+        "class" : "persona-host-circle"
+    });
+    if(ahost)
+        toadd.attr("title", "Move " + ahost + " to another persona");
+    var host_text = this.makeHostDivPartial(ahost, idme);
+    var host_text_bg = $("<div>", {
+        "class" : "persona-host-text-bg"
+    }).append(host_text);
+    var host_icon = $("<div>", {
+        "class" : "persona-host-icon"
+    });
+    toadd.append(host_text_bg, host_icon);
+    return toadd;
+};
+
+BlockObject.prototype.startDragHost = function(evt){
+    var target = $(evt.target);
+    target.attr("data-dragging", "true");
+    this.parent().events.trigger("startdrag");
+    var offset = target.offset();
+    var position = target.position();
+    target.addClass("persona-dragging-host");
+    this.addPlaceholder(target, target);
+    target.appendTo($("body"));
+    target.css({
+        "left" : "0",
+        "top" : "0"
+    });
+    target.attr("data-x", offset.left);
+    target.attr("data-y", offset.top);
+};
+
+BlockObject.prototype.endDragHost = function(evt){
+    var target = $(evt.target);
+    var which_persona = this.parent().blocks().filter(function(i){
+        return i.interactable.dropCheck(evt);
+    });
+
+    target.attr("data-x", 0);
+    target.attr("data-y", 0);
+    target.css("transform", "")
+        .css("webkitTransform", "");
+
+    target.attr("data-dragging", "false");
+    target.css({
+        "left" : "",
+        "top" : ""
+    });
+    var perIdStr = target.find(".persona-host-text").attr("data-persona");
+    var perId = parseInt(perIdStr); 
+
+    var sourceBlock = this.parent().getBlock(perId);
+    sourceBlock.removePlaceholder(true);
+    if(!which_persona.length){
+
+        target.appendTo(this.elem());
+    }
+    target.removeClass("persona-dragging-host"); 
+    this.parent().events.trigger("enddrag");
+
+    evt.preventDefault();
+
+    return false;
+};
+
+BlockObject.prototype.insertHost = function(hostdom, donecallback){
+    var edit = this.elem().find(".persona-edit-area");
+    if(edit.length){
+        edit.after(hostdom);
+    } else {
+        this.elem().find(".persona-circle-name").after(hostdom);
+    }
+    if(donecallback)
+        donecallback();
+    return;
+};
+
+BlockObject.prototype.addHostFinish = function(toadd){
+    var parelem = this.elem();
+    var parent_rect = parelem[0].getBoundingClientRect();
+    var child_rect = toadd[0].getBoundingClientRect();
+    if(child_rect.bottom <= parent_rect.bottom ){
+        toadd.addClass("persona-host-circle-visible");
+    } else {
+        this.unshownchildren += 1;
+        this.addHostEllipsis();
+    }
+
+    var addbuttontarget = toadd.find(".persona-host-text-bg");
+
+    var thisobj = this;
+    var info_btn = $("<span>", {
+        "class" : "persona-host-info fa fa-info-circle icon-clickable"
+    });
+
+    var hosttext = addbuttontarget.find(".ellipsis-text").text();
+
+    this.parent().askHostInfo(hosttext, function(info){
+        var hoverhandler = function(event){
+            toadd.addClass("persona-host-editing");
+            var infodiv = $("<div>", {
+                "class" : "persona-edit-host-area"
+            });
+            thisobj.oracle.infoText(infodiv, info);
+
+            addbuttontarget.append(infodiv);
+
+            var parelem = thisobj.elem();
+            var parent_rect = parelem[0].getBoundingClientRect();
+            var child_rect = infodiv[0].getBoundingClientRect();
+            if(child_rect.bottom >= parent_rect.bottom ){
+                toadd.addClass("persona-host-circle-visible");
+                infodiv.css({
+                    "bottom" : "10px"
+                });
+            }
+
+            thisobj.activate("edithost");
+            event.preventDefault();
+            return false;
+        };
+        var exithandler = function(event){
+            toadd.removeClass("persona-host-editing");
+            addbuttontarget.find(".persona-edit-host-area").remove();
+            thisobj.deactivate("edithost");
+            event.preventDefault();
+            return false;
+        };
+        info_btn.hover(hoverhandler, exithandler);
+    });
+
+    addbuttontarget.append(info_btn);
+
+    interact(toadd[0]).draggable({
+        onstart : this.startDragHost.bind(this),
+        onmove : function(evt){
+            var target = evt.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0)
+                    + evt.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0)
+                    + evt.dy;
+
+            target.style.webkitTransform =
+                target.style.transform =
+                'translate(' + x + 'px, ' + y + 'px)';
+
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+
+            var off = $(target).offset();
+            var bottom = $(window).scrollTop() + $(window).height();
+            var top = $(window).scrollTop();
+            var area = $(".persona-area").offset().top +
+                    $(".persona-area").height();
+            if(off.top + 20 > bottom && off.top < area){
+                target.scrollIntoView(false);
+            }
+            if(off.top < top){
+                target.scrollIntoView(true);
+            }
+        },
+        onend : this.endDragHost.bind(this) 
+    }).inertia(true);
+};
+
+
+BlockObject.prototype.filter = function(ahost) {
+    /* Regular expression provided by http://regexr.com/355hb 
+       Matches most kinds of urls that have general syntax of:
+       http(s)://www.example.com/path, www.example.com/path , example.com/path
+       Other more subtle cases (thus rarer to be encountered) such as:
+       w.yahoo. , ww.yahoo , en.yahoo, will erroneously match as a valid url.
+       TODO: Improve below regular expression to cover all cases of valid urls*/
+    var urlRegExp = /\(?(?:(http|https|ftp):\/\/)?(?:((?:[^\W\s]|\.|-|[:]{1})+)@{1})?((?:www.)?(?:[^\W\s]|\.|-)+[\.][^\W\s]{2,4}|localhost(?=\/)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(\d*))?([\/]?[^\s\?]*[\/]{1})*(?:\/?([^\s\n\?\[\]\{\}\#]*(?:(?=\.)){1}|[^\s\n\?\[\]\{\}\.\#]*)?([\.]{1}[^\s\?\#]*)?)?(?:\?{1}([^\s\n\#\[\]]*))?([\#][^\s\n]*)?\)?/g;
+    return urlRegExp.test(ahost);
+}
+
+
+BlockObject.prototype.addHost = function(ahost){
+
+    var validHost = this.filter(ahost);
+    if (!validHost) {
+        //TODO: Visually notify users that they entered in an invalid URL
+        //var errorMsg = '"' + ahost + '"' + ' is an invalid URL';
+        //this.manager.events.trigger('invalidUrl', errorMsg);
+        return; 
+    }
+    var parelem = this.elem();
+    var toadd = this.makeHostDiv(ahost, true);
+    this.insertHost(toadd, function(){
+        this.addHostFinish(toadd);
+    }.bind(this));
+};
+
+BlockObject.prototype.remove = function(){
+    this.elem().remove();
+    this.parent().remove(this.oracle.id());
+};
+
+BlockObject.prototype.parent = function(){
+    return this.manager;
+};
+
+BlockObject.prototype.beginEditTitle = function(event){
+    if(this.editingTitle){
+        event.preventDefault();
+        return false;
+    }
+    this.editingTitle = true;
+    this.elem()
+        .find(".persona-edit-area")
+        .removeClass("persona-edit-area-hidden");
+    this.elem()
+        .find("input.edit-title")
+        .val(this.title())
+        .select();
+    this.activate("edit");
+    event.preventDefault();
+    return false;
+};
+
+BlockObject.prototype.queryRemove = function(event){
+    this.oracle.queryRemove();
+    event.preventDefault();
+    return false;
+};
+
+BlockObject.prototype.createEditArea = function(){
+    var editArea = $("<div>", {
+        "class" : "persona-edit-area persona-edit-area-hidden"
+    });
+
+    var newTitle = $("<input>", {
+        "type" : "text",
+        "class" : "edit-title"
+    });
+    var thisobj = this;
+    
+    newTitle.keypress(function(e){
+        evt = e || window.event;
+        
+        if (evt.keyCode == 13) {
+            thisobj.acceptEditTitle(e);
+        } 
+    });
+    
+    var colorarea = $("<div>", {
+        "class" : "persona-color-area"
+    });
+    var colorTitle = $("<span>", {
+        "text" : "color",
+        "class" : "persona-change-color-label"
+    });
+    colorarea.append(colorTitle);
+
+    var colorpickerbg = $("<span>", {
+        "class" : "persona-color-picker-bg"
+    });
+
+    var colorpicker = $("<select>", {
+        "class" : "persona-color-picker"
+    });
+    var def_colors = this.parent().defcolors;
+    for(var i = 0; i < def_colors.length; i++){
+        colorpicker.append($("<option>", {
+            "value" : def_colors[i],
+            "text" : def_colors[i]
+        }));
+    }
+    colorpicker.append($("<option>", {
+        "value" : "none",
+        "text" : "None"
+    }));
+
+    colorpickerbg.append(colorpicker);
+    colorarea.append(colorpickerbg);
+
+    var button_area = $("<div>", {
+        "class" : "persona-edit-btn-div"
+    });
+
+    var deleteBtn = $("<button>", {
+        "text" : "Delete"
+    }).click(this.queryRemove.bind(this));
+
+    var doneBtn = $("<button>", {
+        "text" : "Done"
+    }).click(this.acceptEditTitle.bind(this));
+
+    var cancelBtn = $("<button>", {
+        "text" : "Cancel"
+    }).click(this.endEditTitle.bind(this));
+
+    editArea.append(newTitle);
+    editArea.append(colorarea);
+
+    var trackingAllowed = $("<div>", {
+        "class" : "persona-color-area"
+    });
+    var trackingAllowedLabel = $("<span>", {
+        "class" : "persona-tracking-label"
+    }).append($("<label>", {
+        "text" : "Allow tracking",
+        "for" : "allow-tracking-box"
+    }));
+    var trackingAllowedCbox = $("<span>", {
+        "class" : "persona-tracking-input"
+    }).append($("<input>", {
+        "type" : "checkbox",
+        "id" : "allow-tracking-box",
+        "checked" : this.oracle.hasTracking()
+    }));
+    trackingAllowed.append(trackingAllowedLabel, trackingAllowedCbox);
+
+    editArea.append(trackingAllowed);
+
+    button_area.append(deleteBtn);
+    button_area.append(doneBtn);
+    button_area.append(cancelBtn);
+
+    editArea.append(button_area);
+
+    colorpicker.simplecolorpicker({
+        picker : true
+    });
+    colorpicker.simplecolorpicker("selectColor", this.selectColor());
+    this.elem().append(editArea);
+};
+
+BlockObject.prototype.endEditTitle = function(event){
+    this.editingTitle = false;
+    this.elem()
+        .find(".persona-edit-area")
+        .addClass("persona-edit-area-hidden");
+    this.deactivate("edit");
+    this.refresh();
+    if(event){
+        event.preventDefault();
+    }
+    return false;
+};
+
+BlockObject.prototype.acceptEditTitle = function(event){
+    var top_level = this.elem();
+    var textInput = top_level.find("input.edit-title");
+    var textValue = textInput.val();
+    this.oracle.editTitle(textValue);
+    var colorval = top_level.find(".persona-color-picker").val();
+    this.oracle.editColor(colorval);
+    var trackingValue = top_level.find(".persona-tracking-input >"
+                                       + " input").is(":checked");
+    this.oracle.editTracking(trackingValue);
+    event.preventDefault();
+    return false;
+};
+
+BlockObject.prototype.createTitle = function(){
+    var elem_child = $("<div>", {
+        "class" : "persona-circle-name"
+    });
+    var title_span = $("<span>", {
+        "text" : this.title(),
+        "class" : "persona-title-text-node"
+    });
+    elem_child.append(title_span);
+    this.elem().append(elem_child);
+    if(this.oracle.editable){
+        var edit_icon = $("<i>", {
+            "class" : "fa fa-edit icon-clickable small-margin"
+        }).attr("title", "Edit persona");
+        var new_icon = $("<i>", {
+            "class" : "fa fa-plus-square icon-clickable small-margin"
+        }).attr("title", "Add a web site");
+        new_icon.click(this.addEditHost.bind(this));
+        edit_icon.click(this.beginEditTitle.bind(this));
+        elem_child.append(edit_icon);
+        elem_child.append(new_icon);
+        elem_child.append(this.createEditArea());
+    }
+};
+
+BlockObject.prototype.addEditHost = function(){
+    if(this.editingHost)
+        return;
+    this.editingHost = true;
+    var temp_host = this.makeHostDiv("");
+
+    temp_host.addClass("persona-host-circle-visible");
+    temp_host.addClass("persona-host-edit");
+
+    var edit_area = $("<div>", {
+        "class" : "persona-host-edit-input"
+    });
+
+    function submit(e) {
+        var host_text = edit_input.val();
+        var host_node = thisobj.makeHostDivPartial(host_text, true);
+        edit_area.replaceWith(host_node);
+
+        thisobj.oracle.moveHost({
+            "to" : thisobj.oracle,
+            "host" : host_text
+        });
+
+        thisobj.insertHost(temp_host, function(){
+            thisobj.addHostFinish(temp_host);
+        });
+        thisobj.editingHost = false;
+        e.preventDefault();
+        return false;
+    }
+
+    var edit_input = $("<input>", {
+        "type" : "text"
+    });
+
+    
+    edit_input.keypress(function(e){
+        /* http://stackoverflow.com/questions/155188/trigger-a-button-click-with-javascript-on-the-enter-key-in-a-text-box */
+        e = e || window.event;
+        
+        if (e.keyCode == 13) {
+            submit(e);
+        } 
+    })
+
+    var thisobj = this;
+    var accept_btn = $("<i>", {
+        "class" : "fa fa-check-square icon-clickable small-margin",
+        "type"  : "submit",
+        "id"    : "accept-button",
+        "value" : "accept"
+    });
+
+    accept_btn.click(function(e) {submit(e)});
+
+    var reject_btn = $("<i>", {
+        "class" : "fa fa-minus-square icon-clickable small-margin"
+    }).click(function(event){
+        temp_host.remove();
+        thisobj.editingHost = false;
+        event.preventDefault();
+        return false;
+    });
+
+    edit_area.append(edit_input);
+    edit_area.append(accept_btn);
+    edit_area.append(reject_btn);
+
+    temp_host.find(".persona-host-text").replaceWith(edit_area);
+    this.elem().find(".persona-edit-area").before(temp_host);
+    edit_input.select();
+    this.refresh();
+};
+
+BlockObject.prototype.createElem = function(){
+    var color_str = this.color();
+
+    // var parent = $("<span>", {
+    //     "class" : "persona-parent"
+    // });
+    var elem = $("<div>", {
+        "class" : "persona-circle"
+    }).css("background", color_str);
+    this.element = elem;
+    // parent.append(elem);
+
+    this.createTitle();
+    var thisobj = this;
+    elem.hover(function(){
+        thisobj.activate("hover");
+    }, function(){
+        thisobj.deactivate("hover");
+    });
+    this.addHosts();
+    this.interactable =
+        interact(elem[0]).dropzone({
+            accept : ".persona-host-circle", 
+            overlap : "pointer",
+            ondropactivate : function(evt){},
+            ondropdeactivate : function(evt){},
+            ondragenter : function(evt){
+                var target = evt.target;
+                var related = evt.relatedTarget;
+                thisobj.addPlaceholder(related); 
+                thisobj.activate("drag");
+            },
+            ondragleave : function(evt){
+                var target = evt.target;
+                var related = evt.relatedTarget;
+                thisobj.removePlaceholder(); 
+                thisobj.deactivate("drag");
+            },
+            ondrop : function(evt){
+
+                var target = evt.target;
+                var related = evt.relatedTarget;
+                thisobj.moveHostTo(related);
+                thisobj.removePlaceholder(true); 
+            }
+        });
+
+
+    if(this.oracle.styleBlock){
+        this.oracle.styleBlock(elem);
+    }
+
+    this.refresh();
+
+    // this.activate("always");
+
+    // elem.click((function(evt){
+    //     if(this.isActive("always")){
+    //         this.deactivate("always");
+    //     } else {
+    //         this.activate("always");
+    //     }
+
+    //     evt.preventDefault();
+    //     return false;
+    // }).bind(this));
+
+    return elem;
+};
+
+BlockObject.prototype.moveFrom = function(obj){
+    this.oracle.moveFrom(obj);
+};
+
+
+BlockObject.prototype.moveHostTo = function(hostdom){
+    var otherHostJq = $(hostdom);
+    var otherHostNode = otherHostJq.find(".persona-host-text");
+    otherHostJq.attr("data-x", 0);
+    otherHostJq.attr("data-y", 0);
+    otherHostJq.css("transform", "")
+        .css("webkitTransform", "");
+
+    var perIdStr = otherHostNode.attr("data-persona");
+    var perId = parseInt(perIdStr);
+    var thisId = this.oracle.id();
+
+    var sourceBlock = this.parent().getBlock(perId);
+
+    sourceBlock.deactivate("drag");
+    sourceBlock.removePlaceholder(true); 
+    this.deactivate("drag");
+
+    var hostText = otherHostNode.attr("data-host");
+    var info = {
+        "from" : sourceBlock.oracle,
+        "to" : this.oracle,
+        "host" : hostText
+    };
+
+    // important that you remove before you add
+    sourceBlock.moveFrom(info);
+    var add = this.oracle.moveHost(info);
+
+    if(add){
+        var destPersonaDom = this.elem();
+        this.insertHost(otherHostJq);
+        otherHostNode.attr("data-persona", this.oracle.id());
+    } else {
+        otherHostJq.remove();
+    }
+};
+
+BlockObject.prototype.activate = function(key){
+    if(!(key in this.activators)){
+        this.activators[key] = 0;
+    }
+    this.activators[key] = 1;
+    this.refresh();
+};
+
+BlockObject.prototype.isActive = function(key){
+    return key in this.activators;
+};
+
+BlockObject.prototype.activateTransition = function(){
+    var elem = this.elem();
+    var children = elem.children(".persona-host-circle");
+    children.addClass("persona-host-circle-visible");
+    var lastdom = null;
+    if(children.length){
+        for(var i = children.length - 1; i >= 0; i--) {
+            var is_dragging = $(children[i]).attr("data-dragging");
+            if(is_dragging === "false" || !is_dragging){
+                lastdom = children[i];
+                break;
+            }
+        }
+    }
+
+    if(lastdom){
+        var elem_rect = elem[0].getBoundingClientRect();
+        var child_rect = lastdom.getBoundingClientRect();
+        var new_height = child_rect.bottom - elem_rect.top;
+        if(new_height > 170){
+            elem.css("height", new_height);
+        }
+    }
+    this.removeHostEllipsis();
+};
+
+BlockObject.prototype.deactivate = function(key){
+    if(!(key in this.activators)){
+        this.activators[key] = 0;
+    }
+    if(this.activators[key]){
+        this.activators[key]--;
+    }
+    this.refresh();
+};
+
+BlockObject.prototype.refresh = function(){
+    var thisobj = this;
+    var isactive = Object.keys(this.activators).map(function(key){
+        return thisobj.activators[key];
+    }).filter(function(e){
+        return e;
+    }).length;
+    if(isactive){
+        this.activateTransition();
+    } else {
+        this.deactivateTransition();
+    }
+};
+
+BlockObject.prototype.deactivateTransition = function(){
+    var elem = this.elem();
+    elem.css("height", "");
+
+    var children = elem
+            .children(".persona-host-circle")
+            .filter(function(idx, hostelem){
+                var parent_rect = elem[0].getBoundingClientRect();
+                var child_rect = hostelem.getBoundingClientRect();
+                if(child_rect.bottom <= parent_rect.top + 170 ){
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+            .removeClass("persona-host-circle-visible");
+    if(children.length){
+        this.unshownchildren = children.length;
+        this.addHostEllipsis();
+    } else {
+        this.removeHostEllipsis();
+    }
+};
+
+BlockObject.prototype.addHostEllipsis = function(){
+    var toadd = this.elem().find(".persona-host-ellipsis");
+    if(!toadd.length){
+        toadd = $("<div>", {
+            "class" : "persona-host-ellipsis"
+        });
+        this.elem().append(toadd);
+    }
+    toadd.text("And " + this.unshownchildren + " more...");
+};
+
+BlockObject.prototype.removeHostEllipsis = function(){
+    this.elem().find(".persona-host-ellipsis").remove();
+};
+
+BlockObject.prototype.addPlaceholder = function(hostdom, beforeElem){
+    if(this.elem().find(".persona-host-temp").length){
+        return;
+    }
+    var otherHostJq = $(hostdom);
+    var otherHostNode = otherHostJq.find(".persona-host-text");
+
+    var hostText = otherHostNode.attr("data-host");
+
+
+    var temp_host = this.makeHostDiv(hostText);
+
+    temp_host.addClass("persona-host-circle-visible");
+    temp_host.addClass("persona-host-temp");
+    if(beforeElem){
+        temp_host.addClass("persona-host-shadow");
+        beforeElem.before(temp_host);
+    } else {
+        var edit = this.elem().find(".persona-edit-area");
+        if(edit.length){
+            edit.after(temp_host);
+        } else {
+            this.elem().find(".persona-circle-name").after(temp_host);
+        }
+    }
+};
+
+BlockObject.prototype.removePlaceholder = function(override){
+    var place = this.elem().find(".persona-host-temp");
+    if(!place.hasClass("persona-host-shadow") || override){
+        place.remove();
+    }
+};

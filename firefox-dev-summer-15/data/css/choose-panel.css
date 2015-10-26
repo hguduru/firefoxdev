@@ -1,0 +1,150 @@
+body {
+    overflow-y : hidden;
+    font-family: Calibri, Trebuchet MS, sans-serif !important;
+    font-size : 16px;
+}
+
+.toplevel-choice {
+    margin-top : 10px;
+}
+
+.close-btn {
+    border: none;
+    overflow: hidden;
+    width : 16px !important;
+    height : 16px !important;
+    
+    background-image: url("chrome://global/skin/icons/close.png");
+    background-position: 0, 0;
+    
+    background-repeat : no-repeat;
+    display:inline-block;
+    position: relative;
+    float : right;
+}
+
+.close-btn:hover {
+    background-position : -16px, 0;
+}
+
+.close-btn:hover:active {
+    background-position : -32px, 0;
+}
+
+@media (min-resolution: 2dppx) {
+    .close-btn {
+        background-image: url("chrome://global/skin/icons/close@2x.png") !important;
+        background-size : cover;
+    }
+}
+
+#showmore {
+    display : block;
+}
+
+.submitbutton {
+    /* float : right; */
+    margin : 10px 0 0 0;
+    left : 50%;
+}
+
+.column {
+    width : 50%;
+    padding : 0px 0px 1px 0px;
+    text-overflow : ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
+}
+
+.left {
+    float : left;
+}
+
+.right {
+    float : right;
+}
+
+.persona_block {
+    text-overflow : inherit;
+    white-space: inherit;
+    overflow: inherit;
+    margin-bottom : 4px;
+    padding : 1px;
+}
+
+.indent {
+    margin-left : 25px;
+}
+
+#timer-display {
+    font-size : 12px;
+    width : 1em;
+    height : 2em;
+    float : right;
+}
+
+.margintop {
+    margin-top : 10px;
+}
+
+#choose-date {
+    margin-left : 15px;
+    margin-top : 5px;
+    margin-bottom : 10px;
+}
+
+.day-time-interval {
+    margin-bottom : 5px;
+}
+
+.day-abbrev {
+    width : 2.5em;
+    display : inline-block;
+}
+
+.ui-timepicker-wrapper {
+    max-height : 100px !important;
+    max-width : 9em !important;
+}
+
+.error-time {
+    border : 1px solid red;
+}
+
+.remember-div {
+    
+}
+
+.day-interval {
+    margin-left : 2.5em;
+}
+
+.to-inter-lab {
+    margin-left : 5px;
+    margin-right : 5px;
+}
+
+#remember-location-select {
+    max-width : 40%;
+    text-overflow : ellipsis;
+}
+
+.cat-popup {
+    max-width : 300px;
+    float : right;
+    vertical-align : middle;
+}
+
+.category-option i {
+    vertical-align : middle;
+    line-height : inherit;
+    display : inline-block;
+}
+
+.category-option-lab {
+    display : inline-block;
+    width : calc(100% - 40px);
+    text-overflow : ellipsis;
+    overflow : hidden;
+    white-space : nowrap;
+}

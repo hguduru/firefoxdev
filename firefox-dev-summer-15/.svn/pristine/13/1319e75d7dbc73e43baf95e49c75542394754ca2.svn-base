@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head>
+    <link rel="stylesheet" href="navbar-widget.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="navbar-widget.js"></script>
+  </head>
+  <body>
+    <div class="main-area">
+      <div class="main-bg"></div>
+      <span class="main-icon">
+        <span class="num-unconf"></span>
+      </span>
+      <span class="main-persona"></span>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./font-awesome-4.0.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./log_sanitize.css" />
+  </head>
+  <body>
+    <div class="overlay hidden"></div>
+    <div id="send-results" class="hidden popup-dialog res-dialog">
+      <div id="send-results-progress">
+        <span>
+          <i class="fa fa-spin fa-spinner"></i>
+          <span id="send-results-msg">
+            Submitting log... This may take a several minutes.
+          </span>
+        </span>
+        Progress:
+        <div id="prog-container" style="width: 100px;
+                                        height : 20px;
+                                        border : 1px solid black; ">
+          <div id="prog-bar" style="width : 0%;
+                                    height : 100%;
+                                    background : green; ">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="log-cleared" class="hidden popup-dialog res-dialog">
+      <span>
+        Your log has been cleared. Restart your browser to see effects. 
+      </span>
+    </div>
+    
+    <p>Check items that you would like to remove from the log</p>
+    <button id="save-btn" >Send log to researchers</button>
+    <div id="remove-checked-items-div">
+      <input type="submit"
+             value="Remove checked items"
+             id="remove-btn" />
+    </div>
+
+    <div id="no-results" class="hidden no-results">
+      No results...
+    </div>
+    <div id="item_area">
+    </div>
+    <span class="hidden" id="newer-link">
+      <a id="newer-link-a" href="#">Newer...</a>
+    </span>
+    <span id="older-link">
+      <a id="older-link-a" href="#">Older...</a>
+    </span>
+  </body>
+</html>

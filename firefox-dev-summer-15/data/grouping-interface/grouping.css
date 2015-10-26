@@ -1,0 +1,272 @@
+.persona-circle {
+    border-radius : 2px;
+    width : calc(100% - 30px);
+    height : 170px;
+    transition: width 0.3s, height .3s;
+    transition-delay : .1s;
+    transition-timing-function : cubic-bezier(0.31, 0.78, 0.35, 0.9);
+    margin : 10px;
+    /* clear : none; */
+    /* float : left; */
+    position : relative;
+
+    padding : 2px;
+    overflow : hidden;
+}
+
+.persona-dragging-host {
+    position : absolute !important;
+}
+
+.persona-column {
+    width : 250px;
+    
+    padding : 2px;
+    display : inline-block;
+    vertical-align : top;
+}
+
+.persona-top-box {
+}
+
+.persona-parent {
+    position : relative;
+    /* float : right; */
+    /* display : block; */
+    /* clear : none; */
+}
+
+.persona-stacked-box {
+    width : 220px;
+    display : inline-block;
+    height : 170px;
+    vertical-align : top;
+    margin: 10px;
+    padding : 2px;
+}
+
+.persona-stacked-box .persona-circle {
+    height : 40% !important;
+}
+
+.persona-circle:hover {
+    box-shadow : 0px 0px 5px #888888;
+}
+
+.persona-title-text-node {
+    margin : 3px;
+}
+
+.persona-circle-name {
+    text-align : center;
+    margin-top : 10px;
+    font-weight : bold;
+    width : 100%;
+    position : relative;
+    margin-bottom : 5px;
+}
+
+.main-div {
+    margin-left : 50px;
+    margin-right : 50px;
+    margin-top : 50px;
+}
+
+.persona-host-circle {
+    width : 100%;
+    visibility : hidden;
+    float : left;
+    clear : none;
+    cursor : move;
+    max-width : 220px;
+    position : relative;
+}
+
+.ellipsis-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.persona-host-circle-visible {
+    visibility : visible;
+}
+
+.persona-host-text-bg {
+    background : rgba(220, 220, 255, .5);
+    margin : 5px;
+    padding : 5px;
+    width : calc(100% - 20px);
+    height : calc(100% - 20px);
+    border-radius : 2px;
+}
+
+.persona-host-text-bg:hover > .persona-host-info {
+    visibility : visible !important;
+}
+
+.persona-host-info {
+    visibility : hidden;
+    vertical-align : middle;
+    position : absolute;
+    right : 10px;
+    display : inline-block;
+}
+
+.persona-host-editing {
+    /* height : 100px; */
+}
+
+.persona-edit-host-area {
+    margin : 3px;
+    padding : 3px;
+    font-size : smaller;
+    position : absolute;
+    z-index : 20;
+    right : 20px;
+    width : calc(100% - 40px);
+    border-radius : 2px;
+    box-shadow : 0 0 1em rgba(20,20,20,.5);
+    background : rgba(255,255,255,1);
+}
+
+.persona-host-text {
+    display : inline-block;
+    vertical-align : middle;
+    
+}
+
+.persona-host-temp > .persona-host-text-bg {
+    border : rgba(240,230,168,.5) 1px solid;
+    margin : 4px;
+    background : rgba(240,230,168,.5);
+}
+
+.persona-edit-area {
+    /* transition : height 0.5s linear .5s; */
+    width : calc(100% - 30px);
+    margin-left : 10px;
+    margin-right : 10px;
+    margin-top : 10px;
+    margin-bottom : 10px;
+    position : relative;
+    background : rgba(255,255,255,.5);
+    padding : 5px;
+}
+
+.edit-title {
+    width : calc(100% - 10px);
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.persona-edit-area-hidden {
+    height : 0px !important;
+    overflow : hidden;
+    margin-top : 0 !important;
+    margin-bottom : 0 !important;
+    padding-top : 0 !important;
+    padding-bottom : 0 !important;
+}
+
+.persona-edit-btn-div {
+    width : 100px;
+    white-space : nowrap;
+    padding : 3px;
+    /* float : right; */
+}
+
+.persona-change-color-label {
+    margin : 5px;
+    display : inline-block;
+}
+
+.persona-color-area {
+    padding : 3px;
+    margin : 3px;
+    height : 24px;
+}
+
+.persona-color-picker-bg {
+    background : #ffffff;
+    border-radius : 2px;
+    padding : 3px;
+    float : right;
+}
+
+.persona-icon-bg {
+    position : absolute;
+    top : calc(50%);
+    left : calc(50% - 12px);
+}
+
+.persona-host-edit {
+    cursor : default !important;
+}
+
+.persona-host-edit input {
+    vertical-align : middle;
+}
+
+.persona-new-persona-block {
+    border-style : solid;
+    border-color : rgba(0,0,0,0);
+    padding : 2px;
+    border-width : 1px;
+    display : block;
+    /* height : 62px !important; */
+}
+
+.persona-unconfigured-block {
+    border-style : dashed;
+    border-color : #ff0000;
+    border-width : 3px;
+    width : 50%;
+    display : inline-block;
+}
+
+.persona-trash-block {
+    border-style : solid;
+    border-color : rgba(0,0,0,0);
+    padding : 2px;
+    border-width : 1px;
+    display : block;
+    /* height : 62px; */
+}
+
+.persona-persona-block {
+    border-style : solid;
+    border-color : rgba(0,0,0,0);
+    border-width : 3px;
+    display : block;
+    float : left;
+    clear : none;
+}
+
+.persona-spacer {
+    width: 100%;
+    height : 40px;
+}
+
+.persona-host-ellipsis {
+    position : absolute;
+    bottom : 0px;
+    font-size : smaller;
+}
+
+.persona-host-shadow > .persona-host-text-bg {
+    background-color : rgba(156,156,156,.5) !important;
+    border : rgba(156,156,156,.5) 1px solid;
+    margin : 4px;
+}
+
+.persona-tracking-label {
+    margin : 5px;
+    display : inline-block;
+}
+
+.persona-tracking-input {
+    float : right;
+    margin-right : 3px;
+    display : inline-block;
+}

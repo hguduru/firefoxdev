@@ -1,0 +1,31 @@
+multiple url patterns
+  - fixed
+
+Firefox view cookies dialog doesn't update new/changed cookies without refreshing the dialog
+  - due to xpcwrappednative being passed in emit function, not sure how to get around
+
+Ask for cookie permission seems to not remember decision under certain circumstances
+  - fixed: permission changes take affect at time of asking not during next request
+
+radio buttons on Mac are always finicky
+  - https://bugzilla.mozilla.org/show_bug.cgi?id=643184
+  - tried solution on last comment: adding css to xul browser
+ 
+.menu-iconic-left { margin-left: -16px; margin-right: -16px; padding-left: 16px; }
+.menu-iconic-icon { width:16px; margin-left: 0px; margin-right: 0px; }
+
+  - works better but not perfect
+
+New window doesn't have tabbar button
+  - fixed: no force in tbb argument
+
+make new persona. then make new tab. Check mark for persona is by wrong one, but displays correctly in button
+
+url rules are not perisistent across restarts
+  - just tested, seems to work
+
+on session restore, the persona is not saved
+
+clear recent history doesn't work
+  - just tested, seems to work
+

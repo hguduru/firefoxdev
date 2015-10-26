@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="./css/decision_panel.css" />
+  </head>
+  <body>
+    <p style="text-align : center;" id="title">Pending Decisions</p>
+    <div id="dec-place">
+    </div>
+    <p style="text-align : center;" href="#">Next Decisions</p>
+  </body>
+</html>

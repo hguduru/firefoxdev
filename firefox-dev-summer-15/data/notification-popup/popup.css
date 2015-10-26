@@ -1,0 +1,13 @@
+.popup-area {
+    vertical-align : center;
+    display : block;
+    width : 100%;
+    text-align : center;
+}
+
+.timer-display {
+    font-size : 12px;
+    width : 1em;
+    height : 2em;
+    float : right;
+}

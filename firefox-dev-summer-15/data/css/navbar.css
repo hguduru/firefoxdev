@@ -1,0 +1,55 @@
+body {
+    font-size : 14px;
+    overflow : hidden;
+}
+
+.navbar-section {
+    margin : 0;
+    padding-top : 5px;
+    padding-bottom : 5px;
+    line-height : 110%;
+}
+
+.navbar-top-divider {
+    border-top-style : solid;
+    border-top-color : #ccccdd;
+    border-top-width : 1px;
+}
+
+.navbar-list {
+    list-style-type : none;
+    padding : 0;
+    margin : 0;
+}
+
+.navbar-item {
+    width : calc(100% - 22px);
+    display : inline-block;
+    user-select : none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor : pointer;
+    padding-left : 10px;
+    padding-right : 10px;
+    padding-top : 2px;
+    padding-bottom : 2px;
+    border-radius : 4px;
+    margin : 1px;
+    white-space : nowrap;
+}
+
+.navbar-item:hover {
+    background : #f0f0ff;
+    border-style : solid;
+    border-color : #aaaadd;
+    border-width : 1px;
+    padding-left : 9px;
+    padding-right : 9px;
+    padding-top : 1px;
+    padding-bottom : 1px;
+}
+
+.navbar-current-persona, .navbar-item:active {
+    background : #ccccf0 !important;
+}

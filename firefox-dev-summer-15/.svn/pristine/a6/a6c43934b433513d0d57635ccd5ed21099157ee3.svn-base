@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/new-context.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+
+    <!-- third party css -->
+    <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="./font-awesome-4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./jquery-simplecolorpicker-master/jquery.simplecolorpicker.css">
+    <link rel="stylesheet" href="./css/scheduler-ui.css" />
+    <link rel="stylesheet" href="./jquery-timepicker-master/jquery.timepicker.css" />
+    <!-- end third party css -->
+
+    <!-- third party js -->
+    <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="jquery/jquery-ui-1.10.3.custom.min.js">
+    </script>
+    <script type="text/javascript" src="./jquery-timepicker-master/jquery.timepicker.js">
+    </script>
+    <script type="text/javascript" src="./jquery-simplecolorpicker-master/jquery.simplecolorpicker.js">
+    </script>
+    <!-- end third party js -->
+    <script type="text/javascript" src="./scheduler-ui.js"></script>
+    <script type="text/javascript" src="message_tunnel.js"></script>
+    <script type="text/javascript" src="./frame_utils.js"></script>    
+    <script type="text/javascript" src="./CategoryManager.js"></script>
+    <script type="text/javascript" src="new-context-script.js"></script>
+  </head>
+  <body>
+    <!-- addon_name_marker -->
+    <p id="purpose-title">Create New Persona</p>
+    <div id="context-dialog">
+      <form id="context-form" action="#">
+        <fieldset id="dialog-fieldset">
+          <!-- Persona Attributes go here !-->
+          <div class="dialog-section" id="ctx-div-name">
+            <label for="ctx-input-name"
+                   class="display-label">
+              <!-- addon_name_marker -->
+              Persona name</label>
+            <span class="right-side value-section">
+              <input id="ctx-input-name"
+                     class="right-side-inputs"
+                     type="text" />
+            </span>
+          </div>
+
+          <div class="dialog-section" id="ctx-div-color">
+            <label for="ctx-input-color"
+                   class="display-label">Tab color</label>
+            <div class="right-side value-section">
+              <select id="ctx-input-color">
+                <option value="none">None</option>
+              </select>
+              <i class="fa fa-info-circle space-left"></i>
+              <span class="info-popup popup-dialog hidden">
+                <!-- addon_name_marker -->
+                Tabs using this persona will be colored with the
+                selected color.
+              </span>
+            </div>
+          </div>
+
+          <div class="dialog-section">
+            <label class="display-label">
+              <!-- addon_name_marker -->
+              Use this persona if any of these rules are satisfied:
+            </label>
+            <span class="right-side value-section" id="add-label-span">
+              <button id="ctx-add-rule">
+                <i class="fa fa-plus"></i>
+                Add rule
+              </button>
+              <i class="fa fa-info-circle space-left"></i>
+              <span class="info-popup popup-dialog hidden">
+                <!-- addon_name_marker -->
+                If any rule is satisfied, the browser will
+                automatically switch to this persona.
+              </span>
+            </span>
+
+            <div id="ctx-rules">
+            </div>
+          </div>
+
+          <div class="dialog-section">
+            <label class="display-label"
+                   for="ctx-input-tracking">
+              <!-- addon_name_marker -->
+              Do not allow tracking in this persona.
+            </label>
+            <span class="right-side value-section">
+              <input id="ctx-input-tracking"
+                     type="checkbox" />
+              <i class="fa fa-info-circle space-left"></i>
+              <span class="info-popup popup-dialog hidden">
+                Checking this box will not allow third party cookies
+                to be shared between different hosts. This may cause
+                some website functionality to break. 
+              </span>
+            </span>
+          </div>
+
+          <div id="show-advanced" class="advanced-link">
+            <a href="#">Show advanced options</a>
+          </div>
+          <div id="advanced-section">
+            <div class="macro-section">
+              <div class="dialog-section"
+                   id="ctx-div-cookie_policy">
+                <input id="ctx-input-cookie_policy"
+                       type="checkbox" />
+                <label class="display-label"
+                       for="ctx-input-cookie_policy">Accept cookies from sites</label>
+              </div>
+
+              <div class="dialog-section indent"
+                   id="ctx-div-third_party_policy">
+                <label class="display-label"
+                       for="ctx-input-third">Accept third party cookies:</label>
+
+                <div class="right-side value-section">
+                  <select id="ctx-input-third"
+                          class="right-side-inputs">
+                    <option value="deny">Never</option>
+                    <option value="visited">From visited</option>
+                    <option value="all">Always</option>
+                  </select>
+                  <i class="fa fa-info-circle space-left"></i>
+                  <span class="info-popup popup-dialog hidden">
+                    Whether to set third party cookies. "From visited"
+                    will accept third party cookies if you have
+                    previously visited the website as a first party.
+                  </span>
+                </div>
+              </div>
+
+              <div class="dialog-section indent"
+                   id="ctx-div-cookie_duration">
+                <label class="display-label"
+                       for="ctx-input-duration">Keep until:</label>
+                <div class="right-side value-section">
+                  <select id="ctx-input-duration"
+                          class="right-side-inputs">
+                    <option value="expire">They expire</option>
+                    <option value="session">The browser is closed</option>
+                    <option value="ask">Ask every time</option>
+                  </select>
+                  <i class="fa fa-info-circle space-left"></i>
+                  <span class="info-popup popup-dialog hidden">
+                    "Ask every time" will prompt you each time a
+                    cookie is set.
+                  </span>
+                </div>
+              </div>
+
+              <div class="dialog-section indent"
+                   id="ctx-div-third_party_policy">
+                <label class="display-label"
+                       for="ctx-input-third">Share cookies: </label>
+
+                <div class="right-side value-section">
+                  <select id="ctx-input-share"
+                          class="right-side-inputs">
+                    <option value="all">Third party</option>
+                    <option value="none">No cookies</option>
+                  </select>
+                  <i class="fa fa-info-circle space-left"></i>
+                  <span class="info-popup popup-dialog hidden">
+                    Sharing cookies between websites will allow
+                    websites to see cookies set on other websites.
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="advanced-link">
+              <a id="hide-advanced" href="#">Hide advanced options</a>
+            </div>
+          </div>
+
+          <div class="dialog-section right-side">
+            <input type="checkbox" id="switch-to-this" />
+            <label for="switch-to-this">
+              <!-- addon_name_marker -->
+              Switch to this persona
+            </label>
+          </div>
+
+          <div class="dialog-section"
+               id="create-ctx-div">
+            <button id="create-context"
+                    style="float:right;">
+              <!-- addon_name_marker -->
+              Create persona
+            </button>
+            <button id="discard-changes"
+                    style="float:right;">
+              Cancel
+            </button>
+            <button id="delete-ctx-btn"
+                    style="float:right">
+              <i class="fa fa-trash-o"></i>
+              <!-- addon_name_marker -->
+              Delete persona
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

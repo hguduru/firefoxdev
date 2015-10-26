@@ -1,0 +1,11 @@
+{
+    "name": "privatebrowse",
+    "fullName": "privatebrowse",
+    "id": "jid1-HcPRw79U94Oolg",
+    "description": "Manages cookie personas for better privacy and ad experience",
+    "author": "Billy Melicher",
+    "license": "MPL 2.0",
+    "version": "0.3.21",
+    "dependencies" : ["cookiejar", "addon-sdk", "cryptojs-1sp", "lru", "datejs", "moment"],
+    "permissions": {"private-browsing" : true, "unsafe-content-script" : true}
+}

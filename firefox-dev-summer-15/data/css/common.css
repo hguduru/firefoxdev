@@ -1,0 +1,110 @@
+.hidden {
+    display : none !important;
+}
+
+body {
+    font-family : Sans-Serif;
+}
+
+label {
+    user-select : none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.no-select {
+    user-select : none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor : default;
+}
+
+.overflow-hidden {
+    overflow : hidden;
+}
+
+.left-side {
+    float : left;
+}
+
+.right-side {
+    float : right;
+    margin : 0 5px 0 5px;
+    padding : 0 5px 0 5px;
+}
+
+.space-bottom{
+    margin-bottom : 0px !important;
+    padding-bottom : 5px !important;
+}
+
+.smaller {
+    font-size : small;
+}
+
+.button-like {
+    cursor : pointer;
+}
+
+.space-left {
+    margin-left : 5px;
+}
+
+.space-top-bot {
+    margin-top : 5px;
+    margin-bottom : 5px;
+}
+
+.space-right {
+    margin-right : 5px;
+}
+
+.fa-info-circle {
+    cursor : help;
+}
+
+.fa-info-circle:hover + .info-popup {
+    display : block !important;
+}
+
+.info-popup {
+    position : absolute;
+    width : 300px;
+}
+
+.value-section {
+    position : relative;
+    overflow : visible;
+}
+
+.popup-dialog {
+    z-index : 10005;
+    border-color : #969696;
+    border-style : solid;
+    border-width : 1px;
+    border-radius : 6px;
+    box-shadow: 0px 0px 4px 1px #969696;
+    background : #ffffff;
+    top : -5px;
+    padding : 5px;
+    right : 30px;
+    width : 250px;
+}
+
+button i.fa {
+    margin-right : 5px;
+}
+
+.icon-clickable {
+    cursor : pointer;
+}
+
+.small-margin {
+    margin : 3px;
+}
+
+.bold {
+    font-weight : bold;
+}

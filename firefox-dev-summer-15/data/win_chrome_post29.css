@@ -1,0 +1,19 @@
+#persona-tbb {
+    -moz-box-orient: horizontal !important;
+    list-style-image : url("./icons/tbb_icon_18.png") !important;
+    -moz-appearance : toolbarbutton !important;
+}
+
+#persona-tbb .toolbarbutton-icon,
+#persona-tbb .toolbarbutton-icon:hover,
+#persona-tbb .toolbarbutton-icon:active,
+#persona-tbb label.toolbarbutton-text,
+#persona-tbb label.toolbarbutton-text:hover,
+#persona-tbb label.toolbarbutton-text:active {
+    border-style : none !important;
+    box-shadow: none !important;
+    -moz-background-inline-policy: continuous !important;
+    -moz-appearance: none !important;
+    background-color : none !important;
+    background-image : none !important;
+}

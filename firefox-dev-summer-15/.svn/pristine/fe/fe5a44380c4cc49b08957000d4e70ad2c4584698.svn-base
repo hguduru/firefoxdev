@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/common.css" />
+  </head>
+  <body>
+    <centering>
+      <p id="ask-area"></p>
+    </centering>
+    <input id="no"
+           type="submit"
+           value="No"
+           class="right-side"></input>
+    <input id="yes"
+           type="submit"
+           value="Yes"
+           class="right-side"></input>
+  <body>
+</html>

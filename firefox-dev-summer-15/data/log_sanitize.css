@@ -1,0 +1,88 @@
+body {
+    -moz-user-select : none;
+    user-select : none;
+    font-family : sans-serif;
+}
+
+.cb-div {
+    margin : 10px;
+}
+
+.cb-div * {
+    margin : auto;
+    vertical-align : middle;
+    margin-left : 20px;
+}
+
+.time-lab {
+    margin-left : 10px;
+    color : gray;
+}
+
+.url-lab {
+    margin-left : 10px;
+    display : inline-block;
+    max-width : 20em;
+    white-space : nowrap;
+    text-overflow : ellipsis;
+    overflow : hidden;
+}
+
+.domain-lab {
+    color : gray;
+}
+
+.remove-cb {
+    display : hidden;
+}
+
+.favicon-disp {
+    width : 16px;
+    height : 16px;
+    margin-left : 5px;
+    cursor : normal;
+}
+
+.hidden {
+    display : none;
+}
+
+.space-left {
+    margin-left : 5px;
+}
+
+.popup-dialog {
+    z-index : 10005;
+    border-color : #969696;
+    border-style : solid;
+    border-width : 1px;
+    border-radius : 6px;
+    box-shadow: 0px 0px 4px 1px #969696;
+    background : #ffffff;
+}
+
+.res-dialog {
+    position : fixed;
+    top : 50%;
+    left : 50%;
+    margin-left : -250px;
+    margin-top : -50px;
+    width : 500px;
+    height : 100px;
+    padding : 20px;
+}
+
+.overlay {
+    z-index : 10003;
+    background-color: rgba(0, 0, 0, 0.7); /* 0.7 = 70% opacity */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position : fixed;
+}
+
+.no-results {
+    margin-left : 50;
+    margin-top : 50;
+}

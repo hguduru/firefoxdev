@@ -1,0 +1,25 @@
+/* For: https://bugzilla.mozilla.org/show_bug.cgi?id=643184 */
+#persona-tbb .menu-iconic-left { margin-left: -16px; margin-right: -16px; padding-left: 16px; }
+#persona-tbb .menu-iconic-icon { width:16px; margin-left: 0px; margin-right: 0px; }
+
+#persona-tbb .toolbarbutton-icon {
+    height : 24px !important;
+    width : 24px !important;
+}
+
+toolbar[iconsize="small"] #persona-tbb .toolbarbutton-icon {
+    height : 16px !important;
+    width : 16px !important;
+}
+
+#persona-tbb {
+    -moz-box-orient: horizontal !important;
+    list-style-image : url("./icons/tbb_icon_32.png") !important;
+}
+
+@media (min-resolution: 2dppx) {
+    #persona-tbb {
+        list-style-image : url("./icons/tbb_icon_64.png") !important;
+    }
+}
+

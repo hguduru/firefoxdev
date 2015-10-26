@@ -1,0 +1,43 @@
+.scheduler-first-weekday-lb {
+    margin-left : 0px !important;
+}
+
+.scheduler-weekday-lb {
+    margin-right : 5px;
+    font-size : small;
+}
+
+.scheduler-day-time-interval {
+    margin-bottom : 5px;
+}
+
+.scheduler-day-abbrev {
+    width : 2.5em;
+    display : inline-block;
+}
+
+.scheduler-error-time {
+    border : 1px solid red;
+}
+
+.scheduler-icon-plus {
+    margin-left : 10px;
+    cursor : pointer;
+}
+
+.scheduler-day-interval {
+    margin-left : 2.5em;
+}
+
+.scheduler-time-div {
+    margin-left : 2.5em;
+}
+
+.scheduler-icon-plus {
+    margin-left : 10px;
+    cursor : pointer;
+}
+
+.scheduler-root {
+    min-width : 15em;
+}

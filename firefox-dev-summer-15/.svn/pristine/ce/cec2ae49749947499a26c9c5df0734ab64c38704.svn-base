@@ -1,0 +1,179 @@
+#context-dialog {
+    overflow : hidden;
+}
+
+.dialog-section {
+    clear: both;
+    padding: 2px;
+    overflow: visible;
+    margin-top : 10px;
+}
+
+.radio-section {
+    width : 80%;
+    float: right;
+}
+
+.radio-btn {
+    margin : 5px;
+    padding : 5px;
+}
+
+.indent {
+    margin-left : 50px;
+}
+
+.workaround {
+    border-style : none !important;
+}
+
+#ctx-input-color {
+    z-index : 1;
+    display : none;
+}
+
+.more-colors-div {
+    border-style : none !important;
+}
+
+.more-colors-link {
+    cursor : pointer;
+    color : blue;
+    text-decoration : underline;
+}
+
+#selected-color {
+    display : inline-block;
+    margin : 0px !important;
+    padding : 0px !important;
+    height : 16px;
+    width : 16px;
+    background : black;
+    border-style : solid;
+    border-width : 1px;
+    border-color : gray;
+}
+
+.selected-color-lab {
+    margin-left : 10px;
+    margin-top : 0;
+    margin-bottom : 0;
+    display : inline-block;
+    margin-bottom : 8px;
+    text-align : center;
+    vertical-align: middle; 
+}
+
+.right-side-inputs {
+    width : 150px;
+}
+
+.advanced-link {
+    margin-top : 10px;
+}
+
+#ctx-add-rule {
+    cursor : pointer;
+}
+
+.icon-btn {
+    cursor : pointer;
+    margin-left : 5px;
+    float : right;
+    margin-top : 2px;
+    margin-right : 0px !important;
+}
+
+.rule-div {
+    width : 75%;
+    margin-right : 0px !important;
+    border-left-width : 1px;
+    border-left-color : #CCCCCC;
+    border-left-style : solid;
+    padding-left : 10px;
+    min-height : 50px;
+}
+
+.rule-label {
+    margin-top : 5px;
+    padding-right : 10px;
+}
+
+.rule-label-text {
+    display : inline-block;
+}
+
+.attribute-div {
+    display : block;
+    margin-top : 5px;
+    padding-top : 5px;
+    padding-bottom : 5px;
+    clear : both;
+    overflow : visible;
+}
+
+.attribute-div label {
+    font-size : small;
+}
+
+.attribute-container {
+    clear : both;
+    margin-bottom : 5px;
+    margin-left : 0px;
+    margin-right : 0px;
+    margin-top : 5px;
+    border-color : #444444 !important;
+    border-style : solid !important;
+    border-width : 1px !important;
+    border-radius : 6px;
+    padding : 5px;
+    height : auto !important;
+    overflow: auto;
+    min-height : 50px;
+}
+
+.add-attr-icons {
+    margin-top : 5px !important;
+    display : block;
+}
+
+#ctx-rules {
+    max-height : 200px;
+    overflow : auto;
+    clear : both;
+}
+
+.no-right {
+    margin-right : 0px !important;
+    padding-right : 0px !important;
+    clear : both;
+}
+
+.remove-rule-btn {
+    margin-top : 5px;
+}
+
+.category-select {
+    width : 100px;
+    margin-right : 5px;
+    margin-left : 5px;
+}
+
+.category-span {
+    font-size : 12px;
+    display : inline;
+}
+
+#add-label-span {
+    display : inline;
+}
+
+.macro-section {
+    margin-top : 20px;
+    margin-bottom : 20px;
+}
+
+.force-visible {
+    overflow : visible;
+}
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="./css/choose-panel.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/scheduler-ui.css" />
+    <link rel="stylesheet" href="./jquery-timepicker-master/jquery.timepicker.css" />
+    <link rel="stylesheet" href="./font-awesome-4.0.3/css/font-awesome.min.css" />
+    <script type="text/javascript" src="./jquery/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="./scheduler-ui.js"></script>
+    <script type="text/javascript" src="./jquery/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="./jquery-timepicker-master/jquery.timepicker.js"></script>
+
+    <script type="text/javascript" src="./message_tunnel.js"></script>
+    <script type="text/javascript" src="./event_manager.js"></script>
+    <script type="text/javascript" src="./frame_utils.js"></script>
+    <script type="text/javascript" src="./persona_manager.js"></script>
+    <script type="text/javascript" src="./CategoryManager.js"></script>
+    <script type="text/javascript" src="./choose_persona.js"></script>
+  </head>
+  <body id="panel_area" class="all-text">
+    <div id="close-div">
+      <div id="close-btn"
+           class="close-btn">
+      </div>
+      <span id="timer-display" class="no-select"></span>
+    </div>
+    <p id="title" class="no-select"></p>
+
+    <div class="toplevel-choice">
+      <input id="switch-radio"
+             name="main-choice"
+             type="radio" />
+      <label for="switch-radio"
+             id="switch-label">
+        <!-- addon_name_marker -->
+        Switch to a new or different persona</label>
+    </div>
+
+    <div id="personas" class="indent">
+      <div id="personas-left" class="column left"></div>
+      <div id="personas-right" class="column right"></div>
+
+      <div id="overflow">
+        <div id="overflow-left" class="column left"></div>
+        <div id="overflow-right" class="column right"></div>
+      </div>
+      <a id="show-more" href="#">show more</a><br/>
+      <div style="clear : both;"></div>
+      <div id="make-new-div"
+           class="margintop">
+        <input name="persona-radio"
+               type="radio"
+               id="make-new-persona"></input>
+        <label for="make-new-persona">
+          <!-- addon_name_marker -->
+          Make a new persona
+        </label>
+        <div id="migrate-area" class="hidden" style="margin-top : 10px;">
+          <input type="checkbox" id="migrate-cookies"></input>
+          <label for="migrate-cookies">
+            <!-- addon_name_marker -->
+            Put previous cookies from this website in this persona
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="toplevel-choice">
+      <input id="stay-this-time"
+             name="main-choice"
+             type="radio" />
+      <label for="stay-this-time"
+             id="stay-this-time-lab"></label>
+    </div>
+
+    <div id="remember-options" class="indent">
+
+      <input id="always-use-for-cb"
+             type="checkbox"
+             class="remember-option" />
+      <label id="always-use-for-text"
+             for="always-use-for-cb">
+      </label>
+      <div class="indent">
+        <div class="remember-div"
+             id="remember-div-category">
+        </div>
+        <div class="remember-div">
+          <input id="remember-input-host"
+                 name="remember-opts-r"
+                 type="radio"
+                 class="remember-option" />
+          <label for="remember-input-host" id="remember"></label>
+        </div>
+        <div id="remember-full-div">
+          <input id="remember-input-host-full"
+                 name="remember-opts-r"
+                 type="radio"
+                 class="remember-option" />
+          <label for="remember-input-host-full" id="remember-full"></label>
+        </div>
+        <div id="remember-precedence">
+          <input type="radio"
+                 name="remember-opts-r"
+                 id="remember-precedence-rb" />
+          <label for="remember-precedence-rb"
+                 id="remember-precedence-lb">when in conflict</label>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <input type="submit" value="Ok" class="submitbutton" id="submitbutton" />
+  </body>
+</html>
